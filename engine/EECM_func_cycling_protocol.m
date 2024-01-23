@@ -29,6 +29,12 @@ if strcmp(Config.cycling_protocol,'FCPD')
     Config.disch_C_rate = 1;
     Config.t_discharge = 3600/(Config.disch_C_rate)+3600;
 
+elseif strcmp(Config.cycling_protocol,'FCPD-dummy')
+    Config.t_rest_after_C = 2*60*60;
+    Config.t_rest_after_D = 10*60;
+    Config.disch_C_rate = 1;
+    Config.t_discharge = 3600/(Config.disch_C_rate)+3600;
+
 elseif strcmp(Config.cycling_protocol,'OCPD')
     Config.t_rest_after_C = 12*3600;
     Config.t_rest_after_D = 4*3600;
@@ -46,7 +52,7 @@ end
 if strcmp(Config.charging_protocol,'CCCV')
     Config.MSC_T_bucket = [-inf, inf];
     Config.MSC_V_orig = [Config.Vmin, Config.Vmax];
-    Config.MSC_I_orig = [2          , 1/20];
+    Config.MSC_I_orig = [0.5         , 1/20];
 
 
 elseif strcmp(Config.charging_protocol,'2T2CCCV')

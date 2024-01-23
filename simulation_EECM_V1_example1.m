@@ -17,14 +17,14 @@ cell_id_string = 'example1'; % used for display and labeling
 
 % environment
 T_amb = 25; % ambient temperature
-N_cycle = 5; % number of cycles to simulate
+N_cycle = 50; % number of cycles to simulate
 
 % cycling
 cycling = 'FCPD';
 charging = 'CCCV';
 
 % cycles to display
-cycle_display = [1,2];
+cycle_display = [1,50,100];
 
 
 
@@ -50,8 +50,8 @@ for k_cycle = Config.cycle_initial:Config.cycle_last
     IntVar = EECM_func_RR_cycle(Config,IntVar); % calculate internal variables of k-th cycle
     
     % run aging model (In progress)
-    % IntVar = update_aging_metrics_3Para_v02(Config,IntVar); % **in progress
-    % IntVar.cap_fade(IntVar.k_cycle_now-Config.cycle_start+1,:) = [IntVar.k_cycle_now, IntVar.cap_fade_now];
+    IntVar = EECM_func_update_aging(Config,IntVar); % **in progress
+    IntVar.cap_fade(IntVar.k_cycle_now-Config.cycle_initial+1,:) = [IntVar.k_cycle_now, IntVar.cap_fade_now];
     
     % Plot by cycle
     if any(ismember(k_cycle,cycle_display))
@@ -124,20 +124,21 @@ end
 
 
 
-%% Postprocessing
+%% Postprocessing Aging
 
-% IntVar.cap_fade = [[0 0];IntVar.cap_fade];
+IntVar.cap_fade = [[0 0];IntVar.cap_fade];
 
 
-%{
 %% Plots
-figure(1e4+2);
+figure(3);
 hold all;grid on;
-plot(IntVar.cap_fade(:,1),IntVar.cap_fade(:,2),'LineWidth',2, 'color', cmap(2,:))
+plot(IntVar.cap_fade(:,1),IntVar.cap_fade(:,2),'LineWidth',2, 'color', cmat(2,:))
 hold on
 % hold on
 xlabel('Cycle')
 ylabel('Cap Fade (%)')
 %title(['Simulation @ ',num2str(T_cyclelife_amb),'^oC Ambient Temperature']);
 set(gca,'FontSize',24);
+
+ylim([-10 0])
 %}
