@@ -24,7 +24,7 @@ Config.thermal_dyanmics_flag = 0; % on/off thermal model
 
 % folders
 Config.folder_config = pwd; % path to folder containing config 
-Config.folder_model = 'G:\공유 드라이브\Battery Software Lab\EECM\example_1';
+Config.folder_model = 'G:\공유 드라이브\Battery Software Lab\Models\EECM\example_1';
 Config.folder_engine = [pwd filesep 'engine'];
     % assuming simulation and config are in the same folder,
     % where engine files are in a subfolder.
